@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "841830599722",
+    "project_id": "dining-walter",
+    "storage_bucket": "dining-walter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841830599722:android:3f3c7ff7ffded5398a8753",
+        "android_client_info": {
+          "package_name": "com.nexusdev.dining"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6EUvtMX1MvokotVK-7mKyhIcavlmJtio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Dining</string>
+    <string name="papas_fritas">Papas Fritas</string>
+    <string name="price">Q.10.00</string>
+    <string name="message">Que se te antoja hoy?</string>
+    <string name="ok">Sí Hay</string>
+    <string name="cantidad">Cuantos?</string>
+    <string name="ordenar_ahora">Ordenar Ahora</string>
+    <string name="pide_por_whatsapp">Tu orden se hace por WhatsApp</string>
+    <string name="estado">Estado:</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="fondo_de_imagen">fondo de imagen</string>
+    <string name="imagen_de_producto">imagen de producto</string>
+    <string name="_1">1</string>
+    <string name="categoria">Categoria:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">Acerca de</string>
+    <string name="informaci_n">Información</string>
+    <string name="direcci_n">Dirección</string>
+    <string name="maps">Maps</string>
+    <string name="t_rminos_y_condiciones">Términos y Condiciones</string>
+    <string name="icono_telefono">Icono telefono</string>
+    <string name="whatsapp">WhatsApp</string>
+</resources>
