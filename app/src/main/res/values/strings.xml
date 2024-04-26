@@ -4,7 +4,7 @@
     <string name="price">Q.10.00</string>
     <string name="message">Que se te antoja hoy?</string>
     <string name="ok">Sí Hay</string>
-    <string name="cantidad">Cuantos?</string>
+    <string name="cantidad">¿Cuantos?</string>
     <string name="ordenar_ahora">Ordenar Ahora</string>
     <string name="pide_por_whatsapp">Tu orden se hace por WhatsApp</string>
     <string name="estado">Estado:</string>
@@ -22,4 +22,6 @@
     <string name="t_rminos_y_condiciones">Términos y Condiciones</string>
     <string name="icono_telefono">Icono telefono</string>
     <string name="whatsapp">WhatsApp</string>
+
+    <string name="product_empty_cart">Carrito Vacío</string>
 </resources>

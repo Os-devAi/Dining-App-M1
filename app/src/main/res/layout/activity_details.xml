@@ -121,6 +121,31 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/cart"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddCart"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddCart"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:text="Agregar a Carrito"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:icon="@drawable/cart"
+                    app:iconGravity="textEnd"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,8 +201,8 @@
                     android:id="@+id/tvDisponible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/green"
                     android:layout_marginStart="8dp"
+                    android:textColor="@color/green"
                     android:textSize="19sp"
                     android:textStyle="italic|bold"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -11,6 +11,7 @@ data class Producto(
     var imagen: String? = null,
     var estado: String? = null,
     var categoria: String? = null,
+    var newQuantity: Int? = 0,
     var total: Double? = 0.0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -21,6 +22,7 @@ data class Producto(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readInt(),
         parcel.readValue(Double::class.java.classLoader) as? Double
     ) {
     }
@@ -33,6 +35,7 @@ data class Producto(
         parcel.writeString(imagen)
         parcel.writeString(estado)
         parcel.writeString(categoria)
+        parcel.writeValue(newQuantity)
         parcel.writeValue(total)
     }
 

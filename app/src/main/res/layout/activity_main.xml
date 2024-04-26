@@ -11,11 +11,27 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:text="Donde El Che"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/title"
@@ -35,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@color/white"
-            app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"/>
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -65,7 +81,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/btnHoy"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:selectAllOnFocus="true"
@@ -78,7 +94,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/btnTodos"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:selectAllOnFocus="true"
@@ -91,7 +107,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/btnInfo"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:selectAllOnFocus="true"
@@ -110,7 +126,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cnButtom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chip_group">
@@ -122,6 +138,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_list_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cnButtom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView"
+        tools:ignore="NotSibling">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnViewCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/border_redondo_buttons"
+            android:gravity="center"
+            android:padding="8dp"
+            android:shadowColor="@color/white"
+            android:text="Ver Carrito"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/cnButtom"
+            app:layout_constraintEnd_toEndOf="@id/cnButtom"
+            app:layout_constraintTop_toTopOf="@id/cnButtom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

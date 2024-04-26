@@ -1,6 +1,8 @@
 package com.nexusdev.dining.views
 
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nexusdev.dining.R
+import com.nexusdev.dining.adapter.MainAux
 import com.nexusdev.dining.databinding.ActivityDetailsBinding
 import com.nexusdev.dining.model.Producto
 
@@ -19,10 +22,10 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
 
     private var productos: Producto? = null
-    private var estado: String = "disponible"
+    private var estado: String = "Disponible"
     private var db = FirebaseFirestore.getInstance()
     private var productID: String? = null
-    var cantidadI: Int? = 0
+    private var cantidadI: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class DetailsActivity : AppCompatActivity() {
         supportActionBar?.hide()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
 
         getData()
         click()
@@ -65,6 +69,16 @@ class DetailsActivity : AppCompatActivity() {
             binding.tvCategoria.text = productos!!.categoria
             Glide.with(binding.imgProduct).load(productos!!.imagen).into(binding.imgProduct)
             Glide.with(binding.imgBackground).load(productos!!.imagen).into(binding.imgBackground)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                binding.imgBackground.setRenderEffect(
+                    RenderEffect.createBlurEffect(
+                        30f,
+                        30f,
+                        Shader.TileMode.CLAMP
+                    )
+                )
+            }
         }
     }
 

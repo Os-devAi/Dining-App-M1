@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#06D80F</color>
     <color name="gray">#EDEDED</color>
+    <color name="black_chip">#071A2D</color>
 </resources>
