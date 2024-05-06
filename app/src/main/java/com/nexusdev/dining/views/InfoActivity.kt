@@ -3,14 +3,10 @@ package com.nexusdev.dining.views
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.nexusdev.dining.R
 import com.nexusdev.dining.databinding.ActivityInfoBinding
 
@@ -26,10 +22,8 @@ class InfoActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
-
         click()
     }
-
 
     private fun click() {
         binding.let {
@@ -42,12 +36,18 @@ class InfoActivity : AppCompatActivity() {
             it.btnMap.setOnClickListener {
                 openGoogleMaps()
             }
+            it.btnSalir.setOnClickListener {
+                val auth = FirebaseAuth.getInstance()
+                auth.signOut()
+                val i = Intent(this, LoginActivity::class.java)
+                startActivity(i)
+                finish()
+            }
         }
     }
 
-
     private fun llamarTelefono() {
-            startActivity(Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:+502")));
+        startActivity(Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:+502")));
     }
 
     private fun messageWhtasApp() {
@@ -55,7 +55,6 @@ class InfoActivity : AppCompatActivity() {
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)
-
     }
 
     fun openGoogleMaps() {

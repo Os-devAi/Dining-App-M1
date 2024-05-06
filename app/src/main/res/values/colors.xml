@@ -5,4 +5,6 @@
     <color name="green">#06D80F</color>
     <color name="gray">#EDEDED</color>
     <color name="black_chip">#071A2D</color>
+    <color name="red">#8B1010</color>
+    <color name="button_start">#071A2D</color>
 </resources>

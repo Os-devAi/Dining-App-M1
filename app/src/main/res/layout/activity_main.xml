@@ -22,15 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="16dp"
             android:text="Donde El Che"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/title"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <TextView
@@ -41,7 +38,7 @@
             android:layout_marginBottom="16dp"
             android:text="@string/message"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

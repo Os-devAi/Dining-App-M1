@@ -440,6 +440,31 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <ImageButton
+                                android:id="@+id/btnSalir"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/logout"
+                                android:importantForAccessibility="no"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Cerrar Sesión"
+                                android:textColor="#6f6f6f"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>

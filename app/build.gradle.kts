@@ -53,14 +53,28 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    // FirebaseUI for Firebase Auth
+    implementation ("com.firebaseui:firebase-ui-auth:8.0.2")
+    // Import the BoM for the Firebase platform
+    implementation (platform("com.google.firebase:firebase-bom:32.2.3"))
+    // Declare the dependency for the Cloud Firestore library
+    implementation ("com.google.firebase:firebase-firestore-ktx:24.9.1")
+    // Declare the dependency for the Realtime Database library
+    implementation ("com.google.firebase:firebase-database-ktx:20.3.0")
+    // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
+    implementation ("com.google.firebase:firebase-messaging:23.3.1")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
+
+    implementation ("com.google.firebase:firebase-firestore:24.9.1")
 
     //Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     //MaterialDesign
-    implementation ("com.google.android.material:material:1.11.0-alpha02")
-    implementation ("androidx.appcompat:appcompat:1.7.0-alpha03")
+    implementation("com.google.android.material:material:1.11.0-alpha02")
+    implementation("androidx.appcompat:appcompat:1.7.0-alpha03")
 
+    //ImageGif
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
 }

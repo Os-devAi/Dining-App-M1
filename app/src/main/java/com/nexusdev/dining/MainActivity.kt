@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -25,7 +26,6 @@ import com.nexusdev.dining.views.CartFragment
 import com.nexusdev.dining.views.DetailsActivity
 import com.nexusdev.dining.views.InfoActivity
 
-@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -50,6 +50,11 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         window.statusBarColor = ContextCompat.getColor(this, black)
         window.navigationBarColor = ContextCompat.getColor(this, black)
+
+
+        //Set Username
+        val username = FirebaseAuth.getInstance().currentUser?.displayName
+        binding.titleName.text = username
 
         binding.btnHoy.setChipBackgroundColorResource(green)
         getHoy(estado)
