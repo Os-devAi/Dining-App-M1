@@ -1,6 +1,6 @@
 package com.nexusdev.dining.adapter
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,90 +9,60 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.nexusdev.dining.R
 import com.nexusdev.dining.databinding.ItemProductCartBinding
-import com.nexusdev.dining.model.Producto
+import com.nexusdev.dining.model.CartProd
 
 class ProductCartAdapter(
-    private val productList: MutableList<Producto>,
-    private val listener: OnCartListener
+    private val productList: MutableList<CartProd>,
 ) :
     RecyclerView.Adapter<ProductCartAdapter.ViewHolder>() {
 
-    private lateinit var context: Context
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        context = parent.context
-        val view = LayoutInflater.from(context).inflate(R.layout.item_product_cart, parent, false)
-
-        return ViewHolder(view)
+        val view = LayoutInflater.from(parent.context)
+        return ViewHolder(view.inflate(R.layout.item_product_cart, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = productList[position]
-
-        holder.setListenner(product)
-
-        holder.binding.tvName.text = product.nombre
-        holder.binding.tvQuantity.text = product.newQuantity.toString()
-
-        Glide.with(context)
-            .load(product.imagen)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .centerCrop()
-            .circleCrop()
-            .into(holder.binding.imgProduct)
+        val item = productList[position]
+        holder.render(item)
     }
 
     override fun getItemCount(): Int = productList.size
 
-    fun add(product: Producto) {
-        if (!productList.contains(product)) {
-            productList.add(product)
-            notifyItemInserted(productList.size - 1)
-            calcTotal()
-        } else {
-            update(product)
-        }
-    }
-
-    fun update(product: Producto) {
+    fun update(product: CartProd) {
         val index = productList.indexOf(product)
         if (index != -1) {
             productList.set(index, product)
             notifyItemChanged(index)
-            calcTotal()
         }
     }
 
-    fun delete(product: Producto) {
+    fun delete(product: CartProd) {
         val index = productList.indexOf(product)
         if (index != -1) {
             productList.removeAt(index)
             notifyItemRemoved(index)
-            calcTotal()
         }
     }
 
-    private fun calcTotal() {
-        var result = 0.0
-        for (product in productList) {
+    fun getProducts(): List<CartProd> = productList
+
+
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
+        fun render(product: CartProd) {
+            val binding = ItemProductCartBinding.bind(itemView)
+            binding.tvName.text = product.name
+            binding.tvPrice.text = "Q.${product.price.toString()}0"
+            binding.tvQuantity.text = product.quantity.toString()
+            val img = binding.imgProduct
+            Glide
+                .with(img)
+                .load(product.image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .circleCrop()
+                .into(img)
         }
-        listener.showTotal(result)
-    }
 
-    fun getProducts(): List<Producto> = productList
-
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemProductCartBinding.bind(view)
-
-        fun setListenner(product: Producto) {
-            binding.ibSum.setOnClickListener {
-                product.newQuantity = product.newQuantity!! + 1
-                listener.setQuantity(product)
-            }
-            binding.ibSub.setOnClickListener {
-                product.newQuantity = product.newQuantity!! - 1
-                listener.setQuantity(product)
-            }
-        }
     }
 }

@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nexusdev.dining.R
-import com.nexusdev.dining.adapter.MainAux
 import com.nexusdev.dining.databinding.ActivityDetailsBinding
+import com.nexusdev.dining.entities.Constants
+import com.nexusdev.dining.model.CartProd
 import com.nexusdev.dining.model.Producto
 
+@Suppress("DEPRECATION")
 class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
@@ -53,6 +57,27 @@ class DetailsActivity : AppCompatActivity() {
             }
 
         }
+        binding.btnAddCart.setOnClickListener {
+            val usrId = FirebaseAuth.getInstance().currentUser!!.uid
+            if (productos!!.estado == estado && binding.etNewQuantity.text.toString()
+                    .toInt() > 0
+            ) {
+                val dataP = CartProd(
+                    userId = usrId,
+                    name = productos!!.nombre.toString(),
+                    price = productos!!.precio,
+                    quantity = binding.etNewQuantity.text.toString().toInt(),
+                    image = productos!!.imagen
+                )
+                addToCart(dataP)
+            } else {
+                Toast.makeText(
+                    this,
+                    "Lo sentimos no hay disponibles o la cantidad a ordenar no es correcta",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun getData() {
@@ -67,6 +92,7 @@ class DetailsActivity : AppCompatActivity() {
             binding.tvDescription.text = productos!!.descripcion
             binding.tvDisponible.text = productos!!.estado
             binding.tvCategoria.text = productos!!.categoria
+            binding.tvTotalPriceQ.text = productos!!.precio.toString()
             Glide.with(binding.imgProduct).load(productos!!.imagen).into(binding.imgProduct)
             Glide.with(binding.imgBackground).load(productos!!.imagen).into(binding.imgBackground)
 
@@ -82,6 +108,36 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun addToCart(dataP: CartProd) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection(Constants.COLL_CART)
+            .document()
+            .set(dataP)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val snackbar =
+                        Snackbar.make(
+                            binding.root,
+                            "Producto agregado al carrito",
+                            Snackbar.LENGTH_SHORT
+                        )
+                    snackbar.show()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "No se pudo agregar el producto al carrito",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    "No se pudo agregar el producto al carrito",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
 
     private fun buyNow() {
         //Fix quantity default 1

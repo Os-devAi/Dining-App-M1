@@ -1,9 +1,7 @@
 package com.nexusdev.dining
 
 import android.content.Intent
-import android.os.Build
 import android.os.Build.VERSION_CODES
-import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,13 +14,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
 import com.nexusdev.dining.R.color.*
 import com.nexusdev.dining.adapter.MenuAdapter
 import com.nexusdev.dining.databinding.ActivityMainBinding
 import com.nexusdev.dining.entities.Constants
 import com.nexusdev.dining.model.Producto
-import com.nexusdev.dining.views.CartFragment
+import com.nexusdev.dining.views.CartActivity
 import com.nexusdev.dining.views.DetailsActivity
 import com.nexusdev.dining.views.InfoActivity
 
@@ -94,11 +91,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(i)
             }
             it.btnViewCart.setOnClickListener {
-                val fragment = CartFragment()
+                /*val fragment = CartFragment()
                 fragment.show(
                     supportFragmentManager.beginTransaction(),
                     CartFragment::class.java.simpleName
-                )
+                )*/
+                val i = Intent(this, CartActivity::class.java)
+                startActivity(i)
             }
         }
     }
