@@ -20,6 +20,7 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
     private lateinit var binding: ActivityCartBinding
     private lateinit var adapter: ProductCartAdapter
 
+    private var productID: String? = null
     private var totalPrice = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,45 +76,29 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
         }
     }
 
-    override fun onAddClicked(product: CartProd) {
-        product.quantity = product.quantity!! + 1
-        updateProduct(product)
-    }
-
-    override fun onRemoveClicked(product: CartProd) {
-        if (product.quantity!! > 0) {
-            product.quantity = product.quantity!! - 1
-            updateProduct(product)
-        }
-    }
-
+    // En la implementación de la actividad o fragmento
     override fun onDeleteClicked(product: CartProd) {
-        product.id?.let {
-            FirebaseFirestore.getInstance().collection(Constants.COLL_CART)
-                .document(it)
+        val db = FirebaseFirestore.getInstance()
+        val docId = product.id // ID del documento a eliminar
+        if (docId != null) {
+            db.collection(Constants.COLL_CART)
+                .document(docId)
                 .delete()
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Producto eliminado", Toast.LENGTH_SHORT).show()
+                    // Eliminación exitosa
+                    Toast.makeText(this, "Producto eliminado del carrito", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Error al eliminar el producto", Toast.LENGTH_SHORT).show()
+                    // Error al eliminar
+                    Toast.makeText(
+                        this,
+                        "Error al eliminar el producto del carrito",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
-
-    private fun updateProduct(product: CartProd) {
-        val db = FirebaseFirestore.getInstance()
-        val docRef = product.id?.let { db.collection(Constants.COLL_CART).document(it) } ?: return
-
-        docRef.update("quantity", product.quantity)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Cantidad actualizada", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al actualizar la cantidad", Toast.LENGTH_SHORT).show()
-            }
-    }
-
 
     override fun showTotal(total: Double) {
         totalPrice = total

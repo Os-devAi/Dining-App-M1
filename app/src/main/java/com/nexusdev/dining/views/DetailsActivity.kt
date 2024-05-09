@@ -29,6 +29,7 @@ class DetailsActivity : AppCompatActivity() {
     private var estado: String = "Disponible"
     private var db = FirebaseFirestore.getInstance()
     private var productID: String? = null
+    private var documentId: String? = null
     private var cantidadI: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +64,7 @@ class DetailsActivity : AppCompatActivity() {
                     .toInt() > 0
             ) {
                 val dataP = CartProd(
+                    id = documentId,
                     userId = usrId,
                     name = productos!!.nombre.toString(),
                     price = productos!!.precio,
@@ -112,11 +114,19 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun addToCart(dataP: CartProd) {
         val db = FirebaseFirestore.getInstance()
-        db.collection(Constants.COLL_CART)
-            .document()
+        val cartRef = db.collection(Constants.COLL_CART).document()
+        cartRef
             .set(dataP)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    documentId = cartRef.id // Obtener el ID del documento
+                    Toast.makeText(this, documentId.toString(), Toast.LENGTH_SHORT).show()
+                    if (documentId != null) {
+                        dataP.id = documentId // Asignar el ID al objeto CartProd
+                        println("Assigned document ID to dataP: ${dataP.id}")
+                    } else {
+                        println("Document ID is null")
+                    }
                     val snackbar =
                         Snackbar.make(
                             binding.root,
@@ -125,6 +135,8 @@ class DetailsActivity : AppCompatActivity() {
                         )
                     snackbar.show()
                 } else {
+                    // Error al crear el documento
+                    println("Error adding document to Firestore: ${task.exception}")
                     Toast.makeText(
                         this,
                         "No se pudo agregar el producto al carrito",
@@ -132,7 +144,9 @@ class DetailsActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
+                // Error al crear el documento
+                println("Failed to add document to Firestore: $e")
                 Toast.makeText(
                     this,
                     "No se pudo agregar el producto al carrito",
@@ -140,6 +154,7 @@ class DetailsActivity : AppCompatActivity() {
                 ).show()
             }
     }
+
 
     private fun buyNow() {
         //Fix quantity default 1
@@ -186,5 +201,4 @@ class DetailsActivity : AppCompatActivity() {
             cantidadI = cantidad
         }
     }
-
 }

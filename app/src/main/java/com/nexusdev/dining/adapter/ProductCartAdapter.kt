@@ -47,18 +47,9 @@ class ProductCartAdapter(
                     .circleCrop()
                     .into(imgProduct)
 
-                setListener(product)
             }
-        }
-
-        fun setListener(product: CartProd) {
-            binding.ibSum.setOnClickListener {
-                listener.onAddClicked(product)
-                updateQuantity(product.quantity!! + 1)
-            }
-            binding.ibSub.setOnClickListener {
-                listener.onRemoveClicked(product)
-                updateQuantity(product.quantity!! - 1)
+            binding.ibDelete.setOnClickListener {
+                listener.onDeleteClicked(product)
             }
         }
 
@@ -107,8 +98,6 @@ class ProductCartAdapter(
     }
 
     interface ProductCartListener {
-        fun onAddClicked(product: CartProd)
-        fun onRemoveClicked(product: CartProd)
         fun onDeleteClicked(product: CartProd)
         fun showTotal(total: Double)
         fun setQuantity(product: CartProd)
