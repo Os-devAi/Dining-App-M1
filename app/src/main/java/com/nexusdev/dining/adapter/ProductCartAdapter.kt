@@ -13,26 +13,70 @@ import com.nexusdev.dining.model.CartProd
 
 class ProductCartAdapter(
     private val productList: MutableList<CartProd>,
+    private val listener: ProductCartListener
 ) :
     RecyclerView.Adapter<ProductCartAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-        return ViewHolder(view.inflate(R.layout.item_product_cart, parent, false))
+            .inflate(R.layout.item_product_cart, parent, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = productList[position]
-        holder.render(item)
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int = productList.size
 
-    fun update(product: CartProd) {
-        val index = productList.indexOf(product)
-        if (index != -1) {
-            productList.set(index, product)
-            notifyItemChanged(index)
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemProductCartBinding.bind(itemView)
+
+        @SuppressLint("SetTextI18n")
+        fun bind(product: CartProd) {
+            with(binding) {
+                // Configuración de otros campos
+                tvName.text = product.name
+                tvPrice.text = "Q.${product.price.toString()}0"
+                tvQuantity.text =
+                    product.quantity.toString()  // Muestra la cantidad actual del producto
+                Glide.with(imgProduct)
+                    .load(product.image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .circleCrop()
+                    .into(imgProduct)
+
+                setListener(product)
+            }
+        }
+
+        fun setListener(product: CartProd) {
+            binding.ibSum.setOnClickListener {
+                listener.onAddClicked(product)
+                updateQuantity(product.quantity!! + 1)
+            }
+            binding.ibSub.setOnClickListener {
+                listener.onRemoveClicked(product)
+                updateQuantity(product.quantity!! - 1)
+            }
+        }
+
+        private fun updateQuantity(quantity: Int) {
+            val product = productList[adapterPosition]
+            product.quantity = quantity
+            notifyItemChanged(adapterPosition)
+            calcTotal()
+        }
+    }
+
+    fun add(product: CartProd) {
+        if (!productList.contains(product)) {
+            productList.add(product)
+            notifyItemInserted(productList.size - 1)
+            calcTotal()
+        } else {
+            update(product)
         }
     }
 
@@ -41,28 +85,32 @@ class ProductCartAdapter(
         if (index != -1) {
             productList.removeAt(index)
             notifyItemRemoved(index)
+            calcTotal()
         }
     }
 
-    fun getProducts(): List<CartProd> = productList
-
-
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        @SuppressLint("SetTextI18n")
-        fun render(product: CartProd) {
-            val binding = ItemProductCartBinding.bind(itemView)
-            binding.tvName.text = product.name
-            binding.tvPrice.text = "Q.${product.price.toString()}0"
-            binding.tvQuantity.text = product.quantity.toString()
-            val img = binding.imgProduct
-            Glide
-                .with(img)
-                .load(product.image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .circleCrop()
-                .into(img)
+    fun update(product: CartProd) {
+        val index = productList.indexOf(product)
+        if (index != -1) {
+            productList.set(index, product)
+            notifyItemChanged(index)
+            calcTotal()
         }
+    }
 
+    private fun calcTotal() {
+        var result = 0.0
+        for (product in productList) {
+            result += product.total!!.toDouble()
+        }
+        listener.showTotal(result)
+    }
+
+    interface ProductCartListener {
+        fun onAddClicked(product: CartProd)
+        fun onRemoveClicked(product: CartProd)
+        fun onDeleteClicked(product: CartProd)
+        fun showTotal(total: Double)
+        fun setQuantity(product: CartProd)
     }
 }

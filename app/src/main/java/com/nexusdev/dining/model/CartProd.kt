@@ -11,6 +11,7 @@ data class CartProd(
     var price: Double? = 0.0,
     var quantity: Int? = 0,
     var total: Double? = 0.0,
+    var newQuantity: Int? = 0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -20,6 +21,7 @@ data class CartProd(
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
     ) {
     }
 
@@ -31,6 +33,7 @@ data class CartProd(
         parcel.writeValue(price)
         parcel.writeValue(quantity)
         parcel.writeValue(total)
+        parcel.writeValue(newQuantity)
     }
 
     override fun describeContents(): Int {

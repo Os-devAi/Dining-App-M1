@@ -67,7 +67,9 @@ class DetailsActivity : AppCompatActivity() {
                     name = productos!!.nombre.toString(),
                     price = productos!!.precio,
                     quantity = binding.etNewQuantity.text.toString().toInt(),
-                    image = productos!!.imagen
+                    image = productos!!.imagen,
+                    total = productos?.precio.toString()
+                        .toDouble() * binding.etNewQuantity.text.toString().toInt()
                 )
                 addToCart(dataP)
             } else {

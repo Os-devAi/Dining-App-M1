@@ -15,11 +15,12 @@ import com.nexusdev.dining.databinding.ActivityCartBinding
 import com.nexusdev.dining.entities.Constants
 import com.nexusdev.dining.model.CartProd
 
-@Suppress("DEPRECATION")
-class CartActivity : AppCompatActivity() {
+class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener {
 
     private lateinit var binding: ActivityCartBinding
     private lateinit var adapter: ProductCartAdapter
+
+    private var totalPrice = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCartBinding.inflate(layoutInflater)
@@ -41,37 +42,85 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun getCartItems() {
-        // Fetch cart items from the database or API
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         db.collection(Constants.COLL_CART)
             .whereEqualTo("userId", userId)
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
-                    return@addSnapshotListener
-                }
+            .get()
+            .addOnSuccessListener { result ->
+                val productList = mutableListOf<CartProd>()
 
-                val productosList = mutableListOf<CartProd>()
-
-                for (value in value!!.documentChanges) {
-                    val cartItem = value.document.toObject(CartProd::class.java)
-                    if (value.type == DocumentChange.Type.ADDED) {
-                        productosList.add(cartItem)
-                    }
+                for (document in result) {
+                    val cartItem = document.toObject(CartProd::class.java)
+                    productList.add(cartItem)
                 }
-                configRecyclerView(productosList)
+                configRecyclerView(productList)
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error al obtener los datos: $exception", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 
-    private fun configRecyclerView(producList: List<CartProd>) {
-        adapter = ProductCartAdapter(producList.toMutableList())
+
+    private fun configRecyclerView(productList: List<CartProd>) {
+        adapter =
+            ProductCartAdapter(productList.toMutableList(), this)
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(
                 this@CartActivity, 1, GridLayoutManager.VERTICAL, false
             )
             adapter = this@CartActivity.adapter
         }
+    }
+
+    override fun onAddClicked(product: CartProd) {
+        product.quantity = product.quantity!! + 1
+        updateProduct(product)
+    }
+
+    override fun onRemoveClicked(product: CartProd) {
+        if (product.quantity!! > 0) {
+            product.quantity = product.quantity!! - 1
+            updateProduct(product)
+        }
+    }
+
+    override fun onDeleteClicked(product: CartProd) {
+        product.id?.let {
+            FirebaseFirestore.getInstance().collection(Constants.COLL_CART)
+                .document(it)
+                .delete()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Producto eliminado", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al eliminar el producto", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun updateProduct(product: CartProd) {
+        val db = FirebaseFirestore.getInstance()
+        val docRef = product.id?.let { db.collection(Constants.COLL_CART).document(it) } ?: return
+
+        docRef.update("quantity", product.quantity)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Cantidad actualizada", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al actualizar la cantidad", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+    override fun showTotal(total: Double) {
+        totalPrice = total
+        binding.tvTotal.text = totalPrice.toString()
+    }
+
+    override fun setQuantity(product: CartProd) {
+        adapter.update(product)
     }
 }
