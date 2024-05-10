@@ -15,6 +15,7 @@ import com.nexusdev.dining.databinding.ActivityCartBinding
 import com.nexusdev.dining.entities.Constants
 import com.nexusdev.dining.model.CartProd
 
+@Suppress("DEPRECATION")
 class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener {
 
     private lateinit var binding: ActivityCartBinding
@@ -37,7 +38,7 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
 
     private fun clicks() {
         binding.close.setOnClickListener {
-            onBackPressed()
+            this.onBackPressed()
             finish()
         }
     }
@@ -76,21 +77,25 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
         }
     }
 
-    // En la implementación de la actividad o fragmento
     override fun onDeleteClicked(product: CartProd) {
         val db = FirebaseFirestore.getInstance()
-        val docId = product.id // ID del documento a eliminar
+        val docId = product.prodId
         if (docId != null) {
             db.collection(Constants.COLL_CART)
                 .document(docId)
                 .delete()
                 .addOnSuccessListener {
-                    // Eliminación exitosa
-                    Toast.makeText(this, "Producto eliminado del carrito", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this,
+                        "Producto ${product.prodId.toString()} eliminado del carrito",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
+                    adapter.clear()
+                    getCartItems()
+                    showTotal(totalPrice)
                 }
                 .addOnFailureListener {
-                    // Error al eliminar
                     Toast.makeText(
                         this,
                         "Error al eliminar el producto del carrito",
@@ -102,10 +107,15 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
 
     override fun showTotal(total: Double) {
         totalPrice = total
-        binding.tvTotal.text = totalPrice.toString()
+        binding.tvTotal.text = "Total: Q${totalPrice}0"
     }
 
     override fun setQuantity(product: CartProd) {
         adapter.update(product)
+    }
+
+    private fun sendMessage(message: String) {
+        val userName = FirebaseAuth.getInstance().currentUser?.displayName
+
     }
 }

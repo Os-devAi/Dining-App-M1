@@ -134,6 +134,7 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="2"
             tools:listitem="@layout/item_list_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -157,10 +158,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/border_redondo_buttons"
-            android:gravity="center"
+            android:drawableTop="@drawable/baseline_shopping_cart_24"
+            android:text="."
             android:padding="8dp"
             android:shadowColor="@color/white"
-            android:text="Ver Carrito"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/cnButtom"
             app:layout_constraintEnd_toEndOf="@id/cnButtom"

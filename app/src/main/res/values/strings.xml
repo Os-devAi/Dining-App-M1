@@ -24,4 +24,6 @@
     <string name="whatsapp">WhatsApp</string>
 
     <string name="product_empty_cart">Carrito Vacío</string>
+    <string name="ver_carrito">Ver Carrito</string>
+    <string name="ordernar">Ordernar</string>
 </resources>

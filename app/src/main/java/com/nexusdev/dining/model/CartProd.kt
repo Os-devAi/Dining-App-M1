@@ -5,6 +5,7 @@ import android.os.Parcelable
 
 data class CartProd(
     var id: String? = null,
+    var prodId: String? = null,
     var image: String? = null,
     var userId: String? = null,
     var name: String? = null,
@@ -18,6 +19,7 @@ data class CartProd(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Double::class.java.classLoader) as? Double,
@@ -27,6 +29,7 @@ data class CartProd(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
+        parcel.writeString(prodId)
         parcel.writeString(name)
         parcel.writeString(image)
         parcel.writeString(userId)

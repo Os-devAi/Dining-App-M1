@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -36,11 +37,11 @@ class ProductCartAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(product: CartProd) {
             with(binding) {
-                // Configuración de otros campos
                 tvName.text = product.name
                 tvPrice.text = "Q.${product.price.toString()}0"
+                tvTotal.text = "Q.${product.total.toString()}0"
                 tvQuantity.text =
-                    product.quantity.toString()  // Muestra la cantidad actual del producto
+                    product.quantity.toString()
                 Glide.with(imgProduct)
                     .load(product.image)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -51,6 +52,7 @@ class ProductCartAdapter(
             binding.ibDelete.setOnClickListener {
                 listener.onDeleteClicked(product)
             }
+            calcTotal()
         }
 
         private fun updateQuantity(quantity: Int) {
@@ -87,6 +89,11 @@ class ProductCartAdapter(
             notifyItemChanged(index)
             calcTotal()
         }
+    }
+
+    fun clear() {
+        productList.clear()
+        notifyDataSetChanged()
     }
 
     private fun calcTotal() {
