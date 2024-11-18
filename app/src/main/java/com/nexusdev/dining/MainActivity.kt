@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -98,6 +99,10 @@ class MainActivity : AppCompatActivity() {
                 )*/
                 val i = Intent(this, CartActivity::class.java)
                 startActivity(i)
+            }
+            it.tvFlag.setOnClickListener {
+                val snackbar = Snackbar.make(it, "Viva Guate \uD83E\uDD58", Snackbar.LENGTH_SHORT)
+                    snackbar.show()
             }
         }
     }

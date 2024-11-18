@@ -33,9 +33,9 @@ class InfoActivity : AppCompatActivity() {
             it.btnWhatsApp.setOnClickListener {
                 messageWhtasApp()
             }
-            it.btnMap.setOnClickListener {
+            /*it.btnMap.setOnClickListener {
                 openGoogleMaps()
-            }
+            }*/
             it.btnSalir.setOnClickListener {
                 val auth = FirebaseAuth.getInstance()
                 auth.signOut()
@@ -47,11 +47,11 @@ class InfoActivity : AppCompatActivity() {
     }
 
     private fun llamarTelefono() {
-        startActivity(Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:+502")));
+        startActivity(Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:+19196561970")));
     }
 
     private fun messageWhtasApp() {
-        val url = "https://wa.me/502"
+        val url = "https://wa.me/19196561970"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)

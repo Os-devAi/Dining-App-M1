@@ -38,8 +38,8 @@ class ProductCartAdapter(
         fun bind(product: CartProd) {
             with(binding) {
                 tvName.text = product.name
-                tvPrice.text = "Q.${product.price.toString()}0"
-                tvTotal.text = "Q.${product.total.toString()}0"
+                tvPrice.text = "$.${product.price.toString()}0"
+                tvTotal.text = "$.${product.total.toString()}0"
                 tvQuantity.text =
                     product.quantity.toString()
                 Glide.with(imgProduct)

@@ -1,13 +1,15 @@
 package com.nexusdev.dining.views
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nexusdev.dining.R
 import com.nexusdev.dining.adapter.ProductCartAdapter
@@ -20,6 +22,8 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
 
     private lateinit var binding: ActivityCartBinding
     private lateinit var adapter: ProductCartAdapter
+    private var productList: MutableList<CartProd> = mutableListOf()
+    private var note: String? = null
 
     private var productID: String? = null
     private var totalPrice = 0.0
@@ -41,6 +45,10 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
             this.onBackPressed()
             finish()
         }
+        binding.efab.setOnClickListener {
+            note = binding.etNote.text.toString().trim()
+            sendMessage()
+        }
     }
 
     private fun getCartItems() {
@@ -51,7 +59,7 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
-                val productList = mutableListOf<CartProd>()
+                productList = mutableListOf<CartProd>()
 
                 for (document in result) {
                     val cartItem = document.toObject(CartProd::class.java)
@@ -60,7 +68,7 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
                 configRecyclerView(productList)
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al obtener los datos: $exception", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Error fetching cart items: $exception", Toast.LENGTH_SHORT)
                     .show()
             }
     }
@@ -87,7 +95,7 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
                 .addOnSuccessListener {
                     Toast.makeText(
                         this,
-                        "Producto ${product.prodId.toString()} eliminado del carrito",
+                        "Product ${product.prodId.toString()} was deleted successfully",
                         Toast.LENGTH_SHORT
                     )
                         .show()
@@ -98,7 +106,7 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
                 .addOnFailureListener {
                     Toast.makeText(
                         this,
-                        "Error al eliminar el producto del carrito",
+                        "Some error occurred while deleting the product",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -107,15 +115,59 @@ class CartActivity : AppCompatActivity(), ProductCartAdapter.ProductCartListener
 
     override fun showTotal(total: Double) {
         totalPrice = total
-        binding.tvTotal.text = "Total: Q${totalPrice}0"
+        binding.tvTotal.text = "Total: $${totalPrice}0"
     }
 
     override fun setQuantity(product: CartProd) {
         adapter.update(product)
     }
 
-    private fun sendMessage(message: String) {
+    private fun sendMessage() {
         val userName = FirebaseAuth.getInstance().currentUser?.displayName
+        if (productList.isEmpty()) {
+            val snackbar =
+                Snackbar.make(
+                    binding.root,
+                    "Your cart is empty",
+                    Snackbar.LENGTH_SHORT
+                )
+            snackbar.show()
+        } else {
+            var pedido = ""
+
+            pedido = pedido + "Order Details:"
+            pedido = pedido + "\n"
+            pedido = pedido + "\n"
+            pedido = pedido + "Name: $userName"
+            pedido = pedido + "\n"
+            pedido = pedido + "___________________________"
+
+            var index = 0
+            while (index < productList.size) {
+                pedido = "$pedido" +
+                        "\n" +
+                        "\n" +
+                        "Product: ${productList[index].name}" +
+                        "\n" +
+                        "Price: $.${productList[index].price}" +
+                        "\n" +
+                        "Quantity: ${productList[index].quantity}" +
+                        "\n" +
+                        "___________________________\n"
+                index++
+            }
+
+            pedido = pedido + "Total: $.$totalPrice"
+            pedido = pedido + "\n"
+            pedido = pedido + "\n"
+            pedido = pedido + "Notes: \$.${note.toString()}\""
+            pedido = pedido + "Thank you for your order!"
+
+            val url = "https://wa.me/19196561970?text=$pedido"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
 
     }
 }

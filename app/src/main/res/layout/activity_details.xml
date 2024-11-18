@@ -95,7 +95,6 @@
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvDescriptionTitle"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +115,6 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/price"
                     android:textColor="@color/black"
-                    android:textSize="19sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -133,10 +131,11 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnAddCart"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/black"
-                    android:text="Agregar a Carrito"
+                    android:padding="16dp"
+                    android:text="@string/add_to_cart"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textStyle="bold"
@@ -156,8 +155,7 @@
                 android:padding="8dp"
                 android:text="@string/descripci_n"
                 android:textColor="@color/black"
-                android:textSize="19sp"
-                android:textStyle="italic|bold"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice" />
@@ -191,8 +189,7 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/estado"
                     android:textColor="@color/black"
-                    android:textSize="19sp"
-                    android:textStyle="italic|bold"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -203,8 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textColor="@color/green"
-                    android:textSize="19sp"
-                    android:textStyle="italic|bold"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvDisponible1"
                     app:layout_constraintTop_toTopOf="parent"
@@ -217,8 +213,7 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/categoria"
                     android:textColor="@color/black"
-                    android:textSize="19sp"
-                    android:textStyle="italic|bold"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDisponible" />
@@ -229,8 +224,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textColor="@color/green"
-                    android:textSize="19sp"
-                    android:textStyle="italic|bold"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvCategoria1"
                     app:layout_constraintTop_toBottomOf="@+id/tvDisponible"
@@ -238,11 +232,50 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <LinearLayout
+                android:id="@+id/noteContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/notes_or_instructions"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNote"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    app:counterOverflowTextColor="@color/black"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="3"
+                        android:hint="@string/add_a_note_like_your_direction_or_other_instructions"
+                        android:imeOptions="actionDone"
+                        android:inputType="text|textCapSentences"
+                        android:shadowColor="@color/black"
+                        android:textAlignment="center"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp">
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -251,9 +284,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@color/black"
-                    android:text="@string/ordenar_ahora"
+                    android:text="@string/order_now"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/tilNewQuantity"
                     app:layout_constraintStart_toStartOf="parent"
@@ -264,8 +296,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/cantidad"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold|italic"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/tilNewQuantity"
                     app:layout_constraintEnd_toEndOf="@id/tilNewQuantity"
                     app:layout_constraintStart_toStartOf="@+id/tilNewQuantity" />
@@ -317,10 +348,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@string/pide_por_whatsapp"
+                    android:text="@string/order_by_whatsapp"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold|italic" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

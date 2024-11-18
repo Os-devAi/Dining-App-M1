@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Tu carrito"
+            android:text="@string/your_cart"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -76,10 +76,51 @@
             android:layout_marginBottom="16dp"
             android:textAlignment="textEnd"
             android:textAppearance="?attr/textAppearanceHeadline5"
-            app:layout_constraintBottom_toTopOf="@+id/efab"
+            app:layout_constraintBottom_toTopOf="@+id/noteContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Total: Q.25.00" />
+
+        <LinearLayout
+            android:id="@+id/noteContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/efab">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/notes_or_instructions"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNote"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:counterOverflowTextColor="@color/black"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="3"
+                    android:hint="@string/add_a_note_like_your_direction_or_other_instructions"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textCapSentences"
+                    android:shadowColor="@color/black"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/efab"

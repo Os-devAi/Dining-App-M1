@@ -12,17 +12,22 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/black"
+        android:background="@drawable/antigua_guatemala"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradiant"/>
 
         <TextView
             android:id="@+id/titleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Donde El Che"
+            android:text="Rincon Chapin EBENEZER"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -42,6 +47,20 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/gt_flag"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <View
             android:id="@+id/view1"
@@ -82,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:selectAllOnFocus="true"
-                android:text="Hoy"
+                android:text="Today"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#071A2D"
                 app:chipStrokeColor="@color/white"
@@ -95,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:selectAllOnFocus="true"
-                android:text="Todos"
+                android:text="All"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#071A2D"
                 app:chipStrokeColor="@color/white"

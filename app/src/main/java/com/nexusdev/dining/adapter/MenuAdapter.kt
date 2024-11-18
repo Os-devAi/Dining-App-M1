@@ -20,7 +20,7 @@ class MenuAdapter(private var itemList: MutableList<Producto>) :
         fun render(producto: Producto) {
             val binding = ItemListViewBinding.bind(itemView)
             binding.productName.text = producto.nombre
-            binding.currentPrice.text = "Q." + producto.precio.toString() + "0"
+            binding.currentPrice.text = "$." + producto.precio.toString() + "0"
             val imgUrl = producto.imagen
             val img = binding.productImage
             Glide

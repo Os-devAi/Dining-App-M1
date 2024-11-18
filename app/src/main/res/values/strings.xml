@@ -1,23 +1,23 @@
 <resources>
-    <string name="app_name">Antojitos El Che</string>
+    <string name="app_name">El Rincón Chapin</string>
     <string name="papas_fritas">Papas Fritas</string>
-    <string name="price">Q.10.00</string>
-    <string name="message">Que se te antoja hoy?</string>
+    <string name="price">$.10.00</string>
+    <string name="message">What do you want to eat today?</string>
     <string name="ok">Sí Hay</string>
-    <string name="cantidad">¿Cuantos?</string>
-    <string name="ordenar_ahora">Ordenar Ahora</string>
-    <string name="pide_por_whatsapp">Tu orden se hace por WhatsApp</string>
-    <string name="estado">Estado:</string>
-    <string name="descripci_n">Descripción</string>
+    <string name="cantidad">Quantity</string>
+    <string name="order_now">Order now</string>
+    <string name="order_by_whatsapp">Order processed by WhatsApp</string>
+    <string name="estado">Status:</string>
+    <string name="descripci_n">Description:</string>
     <string name="fondo_de_imagen">fondo de imagen</string>
     <string name="imagen_de_producto">imagen de producto</string>
     <string name="_1">1</string>
-    <string name="categoria">Categoria:</string>
+    <string name="categoria">Category:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about">Acerca de</string>
-    <string name="informaci_n">Información</string>
-    <string name="direcci_n">Dirección</string>
+    <string name="informaci_n">Information</string>
+    <string name="address">Address</string>
     <string name="maps">Maps</string>
     <string name="t_rminos_y_condiciones">Términos y Condiciones</string>
     <string name="icono_telefono">Icono telefono</string>
@@ -25,5 +25,24 @@
 
     <string name="product_empty_cart">Carrito Vacío</string>
     <string name="ver_carrito">Ver Carrito</string>
-    <string name="ordernar">Ordernar</string>
+    <string name="ordernar">Make Order</string>
+    <string name="gt_flag">🇬🇹</string>
+    <string name="call">Call</string>
+    <string name="sing_out">Sing out</string>
+    <string name="phone_number_one">+1 (919) 656-1970</string>
+    <string name="developer">Developer</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="time">Time</string>
+    <string name="title_of_moms_business">Rincón Chapin EBENEZER</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">sign up</string>
+    <string name="last_name">Last Name:</string>
+    <string name="first_name">First Name:</string>
+    <string name="cancel">Cancel</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="notes_or_instructions">Notes or instructions:</string>
+    <string name="add_a_note_like_your_direction_or_other_instructions">Add a note like your direction or other instructions</string>
 </resources>

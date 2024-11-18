@@ -28,6 +28,7 @@ class DetailsActivity : AppCompatActivity() {
     private var productos: Producto? = null
     private var estado: String = "Disponible"
     private var cantidadI: Int? = 0
+    private var note: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +46,12 @@ class DetailsActivity : AppCompatActivity() {
     private fun click() {
         binding.btnBuyIt.setOnClickListener {
             if (productos!!.estado == estado) {
+                note = binding.etNote.text.toString().trim()
                 buyNow()
             } else {
                 Toast.makeText(
                     this,
-                    "Lo sentimos no hay disponibles o la cantidad a ordenar no es correcta",
+                    "Sorry this product is not available, or check the quantity!",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -73,7 +75,7 @@ class DetailsActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    "Lo sentimos no hay disponibles o la cantidad a ordenar no es correcta",
+                    "Sorry this product is not available, or check the quantity!",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -91,7 +93,7 @@ class DetailsActivity : AppCompatActivity() {
             binding.tvDescription.text = productos!!.descripcion
             binding.tvDisponible.text = productos!!.estado
             binding.tvCategoria.text = productos!!.categoria
-            binding.tvTotalPriceQ.text = productos!!.precio.toString()
+            binding.tvTotalPriceQ.text = "$." + productos!!.precio.toString() + "0"
             Glide.with(binding.imgProduct).load(productos!!.imagen).into(binding.imgProduct)
             Glide.with(binding.imgBackground).load(productos!!.imagen).into(binding.imgBackground)
 
@@ -118,7 +120,7 @@ class DetailsActivity : AppCompatActivity() {
                     val snackbar =
                         Snackbar.make(
                             binding.root,
-                            "Producto agregado al carrito",
+                            "Product added to cart",
                             Snackbar.LENGTH_SHORT
                         )
                     snackbar.show()
@@ -127,7 +129,7 @@ class DetailsActivity : AppCompatActivity() {
                     println("Error adding document to Firestore: ${task.exception}")
                     Toast.makeText(
                         this,
-                        "No se pudo agregar el producto al carrito",
+                        "Sorry this product is not available, or check the quantity!",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -137,7 +139,7 @@ class DetailsActivity : AppCompatActivity() {
                 println("Failed to add document to Firestore: $e")
                 Toast.makeText(
                     this,
-                    "No se pudo agregar el producto al carrito",
+                    "Sorry this product is not available, or check the quantity!",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -145,6 +147,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun buyNow() {
         //Fix quantity default 1
+        val userName = FirebaseAuth.getInstance().currentUser?.displayName
         var nuevaCantidad = binding.etNewQuantity.text.toString().toInt()
         if (nuevaCantidad.equals(null)) {
             nuevaCantidad = "1".toInt()
@@ -153,28 +156,33 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         var pedido = ""
-        pedido = pedido + "Detalles de mi pedido:" + "\n"
-        pedido += "\n"
-        pedido += "\n"
-        pedido += "___________________________"
+        pedido = pedido + "Order Details:"
+        pedido = pedido + "\n"
+        pedido = pedido + "\n"
+        pedido = pedido + "Name: $userName"
+        pedido = pedido + "\n"
+        pedido = pedido + "___________________________"
 
         val total: Double = productos?.precio.toString().toDouble() * nuevaCantidad
         binding.let {
             pedido = pedido +
                     "\n" +
                     "\n" +
-                    "Producto: ${productos?.nombre.toString()}" +
+                    "Product: ${productos?.nombre.toString()}" +
                     "\n" +
-                    "Cantidad: $nuevaCantidad" +
+                    "Quantity: $nuevaCantidad" +
                     "\n" +
-                    "Precio: Q. ${productos?.precio.toString()}" +
+                    "Price: $.${productos?.precio.toString()}" +
                     "\n" +
                     "___________________________" +
                     "\n" +
-                    "TOTAL: Q.${total}"
+                    "TOTAL: $.${total}" +
+                    "\n" +
+                    "\n" +
+                    "Notes: $.${note.toString()}"
         }
 
-        val url = "https://wa.me/50241642429?text=$pedido"
+        val url = "https://wa.me/19196561970?text=$pedido"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)

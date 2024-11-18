@@ -29,6 +29,8 @@ class RegisterActivity : AppCompatActivity() {
         }
         binding.btnCancel.setOnClickListener {
             clearData()
+            this.onBackPressed()
+            this.finish()
         }
     }
 
@@ -52,9 +54,8 @@ class RegisterActivity : AppCompatActivity() {
                             .setDisplayName("$nombre $apellido").build()
 
                         user?.updateProfile(profileUpdate)
-
-                        goHome()
                         clearData()
+                        onBackPressed()
                     } else {
                         showAlert()
                         enableUI()
