@@ -265,7 +265,6 @@
                         android:imeOptions="actionDone"
                         android:inputType="text|textCapSentences"
                         android:shadowColor="@color/black"
-                        android:textAlignment="center"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>

@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: MenuAdapter
     private lateinit var firestoreListener: ListenerRegistration
-    private var estado: String = "Disponible"
+    private var estado: String = "Available"
 
 
     private val productCartList = mutableListOf<Producto>()
